@@ -8,6 +8,7 @@ import {
   Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import {uploadsUrl} from '../utils/variables';
 
 const ListItem = (props) => {
   return (
@@ -15,7 +16,9 @@ const ListItem = (props) => {
       <View style={styles.imagebox}>
         <Image
           style={styles.itemImg}
-          source={{uri: props.singleMedia.thumbnails.w160}}
+          source={{
+            uri: uploadsUrl + props.singleMedia.thumbnails.w160,
+          }}
         />
       </View>
       <View style={styles.textbox}>
