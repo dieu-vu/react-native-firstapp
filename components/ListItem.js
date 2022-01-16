@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/variables';
 
@@ -22,8 +15,13 @@ const ListItem = (props) => {
         />
       </View>
       <View style={styles.textbox}>
-        <Text style={styles.listTitle}>{props.singleMedia.title}</Text>
-        <Text>{props.singleMedia.description}</Text>
+        <Text style={styles.baseText}>
+          <Text style={styles.listTitle}>{props.singleMedia.title}</Text>
+          {'\n'}
+          <Text style={styles.description}>
+            {props.singleMedia.description}
+          </Text>
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -34,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     padding: 10,
-    backgroundColor: '#eee',
+    backgroundColor: 'rgba(250, 238, 231, 0.2)',
     borderRadius: 6,
     margin: 5,
   },
@@ -49,10 +47,20 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 6,
   },
+  baseText: {
+    color: '#FAEEE7',
+    fontFamily: 'Georgia',
+    lineHeight: 20,
+  },
   listTitle: {
     fontWeight: 'bold',
     fontSize: 20,
     paddingBottom: 15,
+  },
+  description: {
+    fontSize: 13,
+    paddingBottom: 15,
+    fontStyle: 'italic',
   },
 });
 

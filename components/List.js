@@ -1,12 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import React from 'react';
+import {FlatList} from 'react-native';
+
 import {useMedia} from '../hooks/ApiHooks';
 import ListItem from './ListItem';
 
