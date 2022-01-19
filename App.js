@@ -1,11 +1,14 @@
 import React from 'react';
 import {StatusBar} from 'expo-status-bar';
 import Navigator from './navigators/Navigators';
+import {MainProvider} from './contexts/MainContext';
 
 const App = () => {
   return (
     <>
-      <Navigator></Navigator>
+      <MainProvider>
+        <Navigator></Navigator>
+      </MainProvider>
       <StatusBar style="auto" />
     </>
   );
