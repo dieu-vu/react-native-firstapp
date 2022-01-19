@@ -1,5 +1,7 @@
 import React, {useContext} from 'react';
 import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {MainContext} from '../contexts/MainContext';
 
 const Profile = () => {
@@ -9,7 +11,8 @@ const Profile = () => {
       <Text>Profile</Text>
       <Button
         title="Log out!"
-        onPress={() => {
+        onPress={async () => {
+          await AsyncStorage.clear();
           setIsLoggedIn(false);
         }}
       ></Button>
