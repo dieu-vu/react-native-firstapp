@@ -30,24 +30,10 @@ const Login = ({navigation}) => {
     checkToken();
   }, []);
 
-  const logIn = async () => {
-    // in real world: call api with user credentials and get a token as response
-    const data = {username: 'dieuv', password: '123456'};
-    try {
-      const userData = await postLogin(data);
-      await AsyncStorage.setItem('userToken', userData.token);
-      setIsLoggedIn(true);
-    } catch (e) {
-      console.error(e);
-    }
-
-    // navigation.navigate('Tabs');
-  };
   return (
     <View style={styles.container}>
       <Text>Login</Text>
       <LoginForm />
-      <Button title="Sign in!" onPress={logIn} />
     </View>
   );
 };
