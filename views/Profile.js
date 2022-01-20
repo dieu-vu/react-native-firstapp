@@ -6,6 +6,7 @@ import {MainContext} from '../contexts/MainContext';
 const Profile = () => {
   const {setIsLoggedIn, user} = useContext(MainContext);
   console.log('Profile', user);
+
   return (
     <SafeAreaView style={styles.container}>
       <Text>Profile</Text>

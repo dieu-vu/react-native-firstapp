@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Text, View, TextInput, Button, Alert} from 'react-native';
+import {Text, View, TextInput, Button} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useLogin} from '../hooks/ApiHooks';
 import {MainContext} from '../contexts/MainContext';

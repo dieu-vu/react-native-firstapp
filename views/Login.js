@@ -1,9 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {
   StyleSheet,
-  View,
   Text,
-  Button,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
@@ -12,7 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useLogin, useUser} from '../hooks/ApiHooks';
+import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 
