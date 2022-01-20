@@ -13,8 +13,6 @@ const Login = ({navigation}) => {
 
   const checkToken = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
-    console.log('token value in async storage', userToken);
-
     try {
       const userData = await getUserByToken(userToken);
       console.log('check token', userData);
