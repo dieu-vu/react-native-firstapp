@@ -5,11 +5,11 @@ import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useLogin, useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
+import RegisterForm from '../components/RegisterForm';
 
 const Login = ({navigation}) => {
   // props is needed for navigation
   const {setIsLoggedIn} = useContext(MainContext);
-  const {postLogin} = useLogin();
   const {getUserByToken} = useUser();
 
   const checkToken = async () => {
@@ -34,6 +34,7 @@ const Login = ({navigation}) => {
     <View style={styles.container}>
       <Text>Login</Text>
       <LoginForm />
+      <RegisterForm />
     </View>
   );
 };

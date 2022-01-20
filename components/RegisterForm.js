@@ -1,13 +1,10 @@
-import React, {useContext} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
 import {Text, View, TextInput, Button, Alert} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
-import {useLogin} from '../hooks/ApiHooks';
-import {MainContext} from '../contexts/MainContext';
+import {useUser} from '../hooks/ApiHooks';
 
-const LoginForm = () => {
-  const {setIsLoggedIn} = useContext(MainContext);
-  const {postLogin} = useLogin();
+const RegisterForm = () => {
+  const {postUser} = useUser();
   const {
     control,
     handleSubmit,
@@ -16,14 +13,15 @@ const LoginForm = () => {
     defaultValues: {
       username: '',
       password: '',
+      email: '',
+      full_name: '',
     },
   });
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const userData = await postLogin(data);
-      await AsyncStorage.setItem('userToken', userData.token);
-      setIsLoggedIn(true);
+      const userData = await postUser(data);
+      console.log('register onSubmit', userData);
     } catch (e) {
       console.error(e);
     }
@@ -43,7 +41,7 @@ const LoginForm = () => {
             onChangeText={onChange}
             value={value}
             autoCapitalize="none"
-            placeholder="username"
+            placeholder="Username"
           />
         )}
         name="username"
@@ -63,16 +61,50 @@ const LoginForm = () => {
             value={value}
             autoCapitalize="none"
             secureTextEntry={true}
-            placeholder="password"
+            placeholder="Password"
           />
         )}
         name="password"
       />
-      {errors.password && <Text>This is required.</Text>}
+
+      {errors.email && <Text>This is required.</Text>}
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({field: {onChange, onBlur, value}}) => (
+          <TextInput
+            style={{borderWidth: 1, width: 200}}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize="none"
+            placeholder="Email"
+          />
+        )}
+        name="email"
+      />
+      {errors.email && <Text>This is required.</Text>}
+
+      <Controller
+        control={control}
+        render={({field: {onChange, onBlur, value}}) => (
+          <TextInput
+            style={{borderWidth: 1, width: 200}}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize="words"
+            placeholder="Full name"
+          />
+        )}
+        name="full_name"
+      />
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
