@@ -1,14 +1,17 @@
 import React, {useContext} from 'react';
 import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import {MainContext} from '../contexts/MainContext';
 
 const Profile = () => {
-  const {setIsLoggedIn} = useContext(MainContext);
+  const {setIsLoggedIn, user} = useContext(MainContext);
+  console.log('Profile', user);
   return (
     <SafeAreaView style={styles.container}>
       <Text>Profile</Text>
+      <Text>{user.username}</Text>
+      <Text>{user.email}</Text>
+      <Text>{user.full_name}</Text>
       <Button
         title="Log out!"
         onPress={async () => {

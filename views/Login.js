@@ -1,5 +1,14 @@
 import React, {useContext, useEffect} from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+  Keyboard,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,7 +18,7 @@ import RegisterForm from '../components/RegisterForm';
 
 const Login = ({navigation}) => {
   // props is needed for navigation
-  const {setIsLoggedIn} = useContext(MainContext);
+  const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken} = useUser();
 
   const checkToken = async () => {
@@ -20,6 +29,7 @@ const Login = ({navigation}) => {
     try {
       const userData = await getUserByToken(userToken);
       console.log('check token', userData);
+      setUser(userData);
       setIsLoggedIn(true);
     } catch (e) {
       console.error(e);
@@ -31,11 +41,22 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Login</Text>
-      <LoginForm />
-      <RegisterForm />
-    </View>
+    <TouchableOpacity
+      style={{flex: 1}}
+      activeOpacity={1}
+      onPress={() => Keyboard.dismiss()}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : ''}
+        style={styles.container}
+      >
+        <Text>Login</Text>
+        <LoginForm />
+        <Text>Registration</Text>
+
+        <RegisterForm />
+      </KeyboardAvoidingView>
+    </TouchableOpacity>
   );
 };
 
