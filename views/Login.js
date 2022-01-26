@@ -27,6 +27,7 @@ const Login = ({navigation}) => {
     try {
       const userData = await getUserByToken(userToken);
       console.log('check token', userData);
+      console.log('token in asyncStorage', userToken);
       setUser(userData);
       setIsLoggedIn(true);
     } catch (e) {
