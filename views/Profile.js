@@ -12,7 +12,6 @@ const Profile = () => {
       <Text>Profile</Text>
       <Text>{user.username}</Text>
       <Text>{user.email}</Text>
-      <Text>{user.full_name}</Text>
       <Button
         title="Log out!"
         onPress={async () => {
