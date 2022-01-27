@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, View, TextInput, Button} from 'react-native';
+import {Text, View, TextInput, Button, Alert} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useUser} from '../hooks/ApiHooks';
-import {TabRouter} from '@react-navigation/native';
+import PropTypes from 'prop-types';
 
-const RegisterForm = () => {
+const RegisterForm = ({setFormToggle}) => {
   const {postUser, checkUserName} = useUser();
 
   const {
@@ -25,8 +25,13 @@ const RegisterForm = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
+      delete data.confirmPassword;
       const userData = await postUser(data);
       console.log('register onSubmit', userData);
+      if (userData) {
+        Alert.alert('Success', 'User created successfully');
+        setFormToggle(true);
+      }
     } catch (e) {
       console.error(e);
     }
@@ -96,7 +101,7 @@ const RegisterForm = () => {
         )}
         name="password"
       />
-      {errors.password && <Text>errors.password.message</Text>}
+      {errors.password && <Text>{errors.password.message}</Text>}
 
       <Controller
         control={control}
@@ -105,7 +110,7 @@ const RegisterForm = () => {
           validate: async (value) => {
             const {password} = getValues();
             if (value === password) {
-              return TabRouter;
+              return true;
             } else {
               return 'Passwords do not match';
             }
@@ -124,7 +129,7 @@ const RegisterForm = () => {
         )}
         name="confirmPassword"
       />
-      {errors.confirmPassword && <Text>errors.confirmPassword.message</Text>}
+      {errors.confirmPassword && <Text>{errors.confirmPassword.message}</Text>}
 
       <Controller
         control={control}
@@ -148,7 +153,7 @@ const RegisterForm = () => {
         )}
         name="email"
       />
-      {errors.email && <Text>This is required.</Text>}
+      {errors.email && <Text>{errors.email.message}</Text>}
 
       <Controller
         control={control}
@@ -168,6 +173,10 @@ const RegisterForm = () => {
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>
   );
+};
+
+RegisterForm.propTypes = {
+  setFormToggle: PropTypes.func,
 };
 
 export default RegisterForm;
