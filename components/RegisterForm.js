@@ -16,6 +16,7 @@ const RegisterForm = ({setFormToggle}) => {
     defaultValues: {
       username: '',
       password: '',
+      confirmPassword: '',
       email: '',
       full_name: '',
     },

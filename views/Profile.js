@@ -21,7 +21,6 @@ const Profile = ({navigation}) => {
     } catch (e) {
       console.error(e.message);
       // in production should return some alerts to the user
-      throw new Error('Issue when loading profile picture');
     }
   };
 

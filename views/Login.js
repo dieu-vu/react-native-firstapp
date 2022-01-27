@@ -68,7 +68,7 @@ const Login = ({navigation}) => {
           ) : (
             <>
               <Text>Registration</Text>
-              <RegisterForm />
+              <RegisterForm setFormToggle={setFormToggle} />
             </>
           )}
         </View>
