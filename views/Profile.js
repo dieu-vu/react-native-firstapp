@@ -4,8 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MainContext} from '../contexts/MainContext';
 import {useTag} from '../hooks/ApiHooks';
 import {uploadsUrl} from '../utils/variables';
+import PropTypes from 'prop-types';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const {setIsLoggedIn, user} = useContext(MainContext);
   const [avatar, setAvatar] = useState('http://placekitten.com/640/640');
   const {getFilesByTag, postTag} = useTag();
@@ -65,6 +66,12 @@ const Profile = () => {
           setIsLoggedIn(false);
         }}
       ></Button>
+      <Button
+        title="Modify user"
+        onPress={() => {
+          navigation.navigate('Modify user');
+        }}
+      ></Button>
     </SafeAreaView>
   );
 };
@@ -78,5 +85,9 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
 });
+
+Profile.propTypes = {
+  navigation: PropTypes.object,
+};
 
 export default Profile;
