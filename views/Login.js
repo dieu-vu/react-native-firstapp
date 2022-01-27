@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   Platform,
   TouchableOpacity,
   Keyboard,
+  View,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
@@ -13,11 +14,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import {Card, ButtonGroup} from 'react-native-elements';
 
 const Login = ({navigation}) => {
   // props is needed for navigation
   const {setIsLoggedIn, setUser} = useContext(MainContext);
   const {getUserByToken} = useUser();
+  const [formToggle, setFormToggle] = useState(true);
 
   const checkToken = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
@@ -49,11 +52,26 @@ const Login = ({navigation}) => {
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         style={styles.container}
       >
-        <Text>Login</Text>
-        <LoginForm />
-        <Text>Registration</Text>
-
-        <RegisterForm />
+        <View>
+          <Card>
+            <ButtonGroup
+              onPress={() => setFormToggle(!formToggle)}
+              selectedIndex={formToggle ? 0 : 1}
+              buttons={['Login', 'Register']}
+            ></ButtonGroup>
+          </Card>
+          {formToggle ? (
+            <>
+              <Text>Login</Text>
+              <LoginForm />
+            </>
+          ) : (
+            <>
+              <Text>Registration</Text>
+              <RegisterForm />
+            </>
+          )}
+        </View>
       </KeyboardAvoidingView>
     </TouchableOpacity>
   );

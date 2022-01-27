@@ -2,13 +2,16 @@ import React from 'react';
 import {Text, View, TextInput, Button} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {useUser} from '../hooks/ApiHooks';
+import {TabRouter} from '@react-navigation/native';
 
 const RegisterForm = () => {
-  const {postUser} = useUser();
+  const {postUser, checkUserName} = useUser();
+
   const {
     control,
     handleSubmit,
     formState: {errors},
+    getValues,
   } = useForm({
     defaultValues: {
       username: '',
@@ -16,6 +19,8 @@ const RegisterForm = () => {
       email: '',
       full_name: '',
     },
+    mode: 'onBlur',
+    // when user leaves the field, field is blurred. On change is on typing
   });
   const onSubmit = async (data) => {
     console.log(data);
@@ -32,7 +37,23 @@ const RegisterForm = () => {
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: {value: true, message: 'This is required'},
+          minLength: {
+            value: 3,
+            message: 'Username has to be at least 3 charaters',
+          },
+          validate: async (value) => {
+            try {
+              const available = await checkUserName(value);
+              if (available) {
+                return true;
+              } else {
+                return 'Username is already taken';
+              }
+            } catch (error) {
+              throw new Error(error.message);
+            }
+          },
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
@@ -42,16 +63,25 @@ const RegisterForm = () => {
             value={value}
             autoCapitalize="none"
             placeholder="Username"
+            // errorMessage={errors.username & errors.username.message}
           />
         )}
         name="username"
       />
-      {errors.username && <Text>This is required.</Text>}
+      {errors.username && <Text>{errors.username.message}</Text>}
 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: {value: true, message: 'This is required'},
+          minLength: {
+            value: true,
+            message: 'Password has to be at least 5 characters',
+          },
+          // pattern: {
+          //   value: /(?=.*[\p{Lu}])(?=.*[0-9]).{8,}/u,
+          //   message: 'Min 8, Uppercase, number',
+          // },
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
@@ -66,12 +96,45 @@ const RegisterForm = () => {
         )}
         name="password"
       />
+      {errors.password && <Text>errors.password.message</Text>}
 
-      {errors.email && <Text>This is required.</Text>}
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: {value: true, message: 'This is required'},
+          validate: async (value) => {
+            const {password} = getValues();
+            if (value === password) {
+              return TabRouter;
+            } else {
+              return 'Passwords do not match';
+            }
+          },
+        }}
+        render={({field: {onChange, onBlur, value}}) => (
+          <TextInput
+            style={{borderWidth: 1}}
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            autoCapitalize="none"
+            secureTextEntry={true}
+            placeholder="Confirm password"
+          />
+        )}
+        name="confirmPassword"
+      />
+      {errors.confirmPassword && <Text>errors.confirmPassword.message</Text>}
+
+      <Controller
+        control={control}
+        rules={{
+          required: {value: true, message: 'This is required'},
+          pattern: {
+            value: /\S+@\S+\.\S+$/i,
+            /* value: /^[a-z0-9_-]+(\.[a-z0-9_-]+)@[a-z0-9-]+(\.[a-z0-9_-]+)\.[a-z]{2,}$/i,*/
+            message: 'Has to be valid email',
+          },
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
