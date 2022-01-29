@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, SafeAreaView, Text, Button, Image} from 'react-native';
+import {StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import {Card, Text, Button, ListItem, Avatar} from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {MainContext} from '../contexts/MainContext';
 import {useTag} from '../hooks/ApiHooks';
@@ -46,29 +47,44 @@ const Profile = ({navigation}) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Profile</Text>
-      <Text>{user.username}</Text>
-      <Image
-        source={{uri: avatar}}
-        style={{width: '80%', height: '50%'}}
-        resizeMode="contain"
-      ></Image>
-      <Text>{user.email}</Text>
-      <Button
-        title="Log out!"
-        onPress={async () => {
-          await AsyncStorage.clear();
-          setIsLoggedIn(false);
-        }}
-      ></Button>
-      <Button
-        title="Modify user"
-        onPress={() => {
-          navigation.navigate('Modify user');
-        }}
-      ></Button>
-    </SafeAreaView>
+    <ScrollView>
+      <Card>
+        <Card.Title>
+          <Text h1>{user.username}</Text>
+        </Card.Title>
+        <Card.Image
+          source={{uri: avatar}}
+          style={{width: '100%', height: undefined, aspectRatio: 1}}
+          resizeMode="contain"
+        ></Card.Image>
+
+        <ListItem>
+          <Avatar icon={{name: 'email', color: 'darkblue'}} />
+          <Text>{user.email}</Text>
+        </ListItem>
+        <ListItem>
+          <Avatar
+            icon={{name: 'user', type: 'font-awesome', color: 'darkblue'}}
+          />
+          <Text>{user.full_name}</Text>
+        </ListItem>
+        <Button
+          title="Log out!"
+          style={styles.button}
+          onPress={async () => {
+            await AsyncStorage.clear();
+            setIsLoggedIn(false);
+          }}
+        ></Button>
+        <Button
+          title="Modify user"
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate('Modify user');
+          }}
+        ></Button>
+      </Card>
+    </ScrollView>
   );
 };
 
@@ -76,10 +92,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 40,
   },
+  button: {margin: 10, width: '70%', alignSelf: 'center'},
 });
 
 Profile.propTypes = {
