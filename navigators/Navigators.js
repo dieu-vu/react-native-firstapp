@@ -7,6 +7,7 @@ import Profile from '../views/Profile';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Single from '../views/Single';
 import Login from '../views/Login';
+import Map from '../views/Map';
 import {MainContext} from '../contexts/MainContext';
 import ModifyUser from '../views/ModifyUser';
 
@@ -47,7 +48,7 @@ const StackScreen = () => {
       {isLoggedIn ? (
         <>
           <Stack.Screen
-            name="Main"
+            name="Tabs"
             component={TabScreen}
             options={{headerShown: false}}
           ></Stack.Screen>
@@ -56,6 +57,7 @@ const StackScreen = () => {
             name="Modify user"
             component={ModifyUser}
           ></Stack.Screen>
+          <Stack.Screen name="Map" component={Map}></Stack.Screen>
         </>
       ) : (
         <>

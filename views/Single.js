@@ -1,10 +1,10 @@
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
-import {StyleSheet, SafeAreaView, ActivityIndicator} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import {Card, ListItem, Text, Avatar} from 'react-native-elements';
 import {uploadsUrl} from '../utils/variables';
 
-const Single = ({route}) => {
+const Single = ({navigation, route}) => {
   const {file} = route.params;
   return (
     <SafeAreaView style={styles.container}>
@@ -21,6 +21,10 @@ const Single = ({route}) => {
       <ListItem>
         <Avatar source={{uri: 'http://placekitten.com/180'}} rounded={1} />
         <Text>Ownername</Text>
+      </ListItem>
+      <ListItem onPress={() => navigation.navigate('Map')}>
+        <Avatar icon={{name: 'map-pin', type: 'feather', color: 'darkblue'}} />
+        <Text>See on map</Text>
       </ListItem>
     </SafeAreaView>
   );
@@ -47,7 +51,8 @@ const styles = StyleSheet.create({
 });
 
 Single.propTypes = {
-  route: propTypes.object,
+  route: PropTypes.object,
+  navigation: PropTypes.object,
 };
 
 export default Single;
