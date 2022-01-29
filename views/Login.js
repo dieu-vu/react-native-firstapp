@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
-  Text,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
@@ -52,24 +51,26 @@ const Login = ({navigation}) => {
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         style={styles.container}
       >
-        <View>
+        <View style={styles.form}>
           <Card>
             <ButtonGroup
               onPress={() => setFormToggle(!formToggle)}
               selectedIndex={formToggle ? 0 : 1}
               buttons={['Login', 'Register']}
-            ></ButtonGroup>
+            />
           </Card>
           {formToggle ? (
-            <>
-              <Text>Login</Text>
+            <Card>
+              <Card.Title h4>Login</Card.Title>
+              <Card.Divider />
               <LoginForm />
-            </>
+            </Card>
           ) : (
-            <>
-              <Text>Registration</Text>
+            <Card>
+              <Card.Title>Registration</Card.Title>
+              <Card.Divider />
               <RegisterForm setFormToggle={setFormToggle} />
-            </>
+            </Card>
           )}
         </View>
       </KeyboardAvoidingView>
@@ -81,8 +82,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+  },
+  form: {
+    flex: 8,
   },
 });
 

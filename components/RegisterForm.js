@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text, View, TextInput, Button, Alert} from 'react-native';
+import {View, Alert} from 'react-native';
+import {Button, Input} from 'react-native-elements';
 import {useForm, Controller} from 'react-hook-form';
 import {useUser} from '../hooks/ApiHooks';
 import PropTypes from 'prop-types';
@@ -62,19 +63,17 @@ const RegisterForm = ({setFormToggle}) => {
           },
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={{borderWidth: 1, width: 200}}
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             autoCapitalize="none"
             placeholder="Username"
-            // errorMessage={errors.username & errors.username.message}
+            errorMessage={errors.username && errors.username.message}
           />
         )}
         name="username"
       />
-      {errors.username && <Text>{errors.username.message}</Text>}
 
       <Controller
         control={control}
@@ -90,19 +89,18 @@ const RegisterForm = ({setFormToggle}) => {
           // },
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={{borderWidth: 1}}
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             autoCapitalize="none"
             secureTextEntry={true}
             placeholder="Password"
+            errorMessage={errors.password && errors.password.message}
           />
         )}
         name="password"
       />
-      {errors.password && <Text>{errors.password.message}</Text>}
 
       <Controller
         control={control}
@@ -118,19 +116,20 @@ const RegisterForm = ({setFormToggle}) => {
           },
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={{borderWidth: 1}}
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             autoCapitalize="none"
             secureTextEntry={true}
             placeholder="Confirm password"
+            errorMessage={
+              errors.confirmPassword && errors.confirmPassword.message
+            }
           />
         )}
         name="confirmPassword"
       />
-      {errors.confirmPassword && <Text>{errors.confirmPassword.message}</Text>}
 
       <Controller
         control={control}
@@ -143,29 +142,28 @@ const RegisterForm = ({setFormToggle}) => {
           },
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={{borderWidth: 1, width: 200}}
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             autoCapitalize="none"
             placeholder="Email"
+            errorMessage={errors.email && errors.email.message}
           />
         )}
         name="email"
       />
-      {errors.email && <Text>{errors.email.message}</Text>}
 
       <Controller
         control={control}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={{borderWidth: 1, width: 200}}
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             autoCapitalize="words"
             placeholder="Full name"
+            errorMessage={errors.full_name && errors.full_name.message}
           />
         )}
         name="full_name"

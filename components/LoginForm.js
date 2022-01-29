@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Text, View, TextInput, Button, Alert} from 'react-native';
+import {View} from 'react-native';
+import {Button, Input, Text} from 'react-native-elements';
 import {useForm, Controller} from 'react-hook-form';
 import {useLogin} from '../hooks/ApiHooks';
 import {MainContext} from '../contexts/MainContext';
@@ -38,8 +39,7 @@ const LoginForm = () => {
           required: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={{borderWidth: 1, width: 200}}
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -57,8 +57,7 @@ const LoginForm = () => {
           required: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={{borderWidth: 1}}
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
