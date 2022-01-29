@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
-import {Text, View, TextInput, Button, Alert} from 'react-native';
+import {StyleSheet, View, Alert} from 'react-native';
+import {Input, Button, Text} from 'react-native-elements';
 import {useForm, Controller} from 'react-hook-form';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
@@ -50,7 +51,7 @@ const ModifyUser = ({navigation}) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Controller
         control={control}
         rules={{
@@ -73,14 +74,14 @@ const ModifyUser = ({navigation}) => {
           },
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             style={{borderWidth: 1, width: 200}}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             autoCapitalize="none"
             placeholder="Username"
-            // errorMessage={errors.username & errors.username.message}
+            errorMessage={errors.username && errors.username.message}
           />
         )}
         name="username"
@@ -100,7 +101,7 @@ const ModifyUser = ({navigation}) => {
           // },
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             style={{borderWidth: 1}}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -108,11 +109,11 @@ const ModifyUser = ({navigation}) => {
             autoCapitalize="none"
             secureTextEntry={true}
             placeholder="Password"
+            errorMessage={errors.password && errors.password.message}
           />
         )}
         name="password"
       />
-      {errors.password && <Text>{errors.password.message}</Text>}
 
       <Controller
         control={control}
@@ -127,7 +128,7 @@ const ModifyUser = ({navigation}) => {
           },
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             style={{borderWidth: 1}}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -135,11 +136,13 @@ const ModifyUser = ({navigation}) => {
             autoCapitalize="none"
             secureTextEntry={true}
             placeholder="Confirm password"
+            errorMessage={
+              errors.confirmPassword && errors.confirmPassword.message
+            }
           />
         )}
         name="confirmPassword"
       />
-      {errors.confirmPassword && <Text>{errors.confirmPassword.message}</Text>}
 
       <Controller
         control={control}
@@ -152,23 +155,23 @@ const ModifyUser = ({navigation}) => {
           },
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             style={{borderWidth: 1, width: 200}}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             autoCapitalize="none"
             placeholder="Email"
+            errorMessage={errors.email && errors.email.message}
           />
         )}
         name="email"
       />
-      {errors.email && <Text>{errors.email.message}</Text>}
 
       <Controller
         control={control}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             style={{borderWidth: 1, width: 200}}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -180,10 +183,25 @@ const ModifyUser = ({navigation}) => {
         name="full_name"
       />
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      <Button
+        title="Submit"
+        onPress={handleSubmit(onSubmit)}
+        style={{width: '50%', alignSelf: 'center'}}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    padding: 10,
+    alignSelf: 'stretch',
+  },
+});
+
 ModifyUser.propTypes = {
   navigation: PropTypes.object,
 };
