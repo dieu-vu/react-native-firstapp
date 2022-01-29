@@ -33,10 +33,7 @@ const Profile = ({navigation}) => {
       tag: 'avatar_' + user.user_id,
     };
     try {
-      const result = await postTag(
-        data,
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwidXNlcm5hbWUiOiJkaWV1diIsImVtYWlsIjoiZGlldXZAbWV0cm9wb2xpYS5maSIsImZ1bGxfbmFtZSI6IkRpZXUgVnUiLCJpc19hZG1pbiI6bnVsbCwidGltZV9jcmVhdGVkIjoiMjAyMi0wMS0xMFQxMzozOToyMC4wMDBaIiwiaWF0IjoxNjQzMTgxMzcwLCJleHAiOjE2NDMyNjc3NzB9.YdTLtaG9U_8M0nmlKESG3MMqk_GeCPF-5a3_cR2M_40'
-      );
+      const result = await postTag(data, 'hard-coded token here');
       console.log(result);
     } catch (e) {
       console.error(e.message);
