@@ -52,7 +52,6 @@ const Map = ({navigation}) => {
   // Call fitToSuppliedMarkers() method on the MapView after markers get updated
   useEffect(() => {
     if (mapRef.current) {
-      // list of _id's must same that has been provided to the identifier props of the Marker
       mapRef.current.fitToSuppliedMarkers(
         markers.map((marker) => marker.index)
       );

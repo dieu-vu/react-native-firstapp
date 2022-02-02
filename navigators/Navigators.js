@@ -8,6 +8,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Single from '../views/Single';
 import Login from '../views/Login';
 import Map from '../views/Map';
+import Upload from '../views/Upload';
 import {MainContext} from '../contexts/MainContext';
 import ModifyUser from '../views/ModifyUser';
 
@@ -36,6 +37,7 @@ const TabScreen = () => {
       })}
     >
       <Tab.Screen name="Home" component={Home}></Tab.Screen>
+      <Tab.Screen name="Upload" component={Upload}></Tab.Screen>
       <Tab.Screen name="Profile" component={Profile}></Tab.Screen>
     </Tab.Navigator>
   );

@@ -1,4 +1,5 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
+import {MainContext} from '../contexts/MainContext';
 import {baseUrl} from '../utils/variables';
 
 const doFetch = async (url, options) => {
@@ -21,6 +22,7 @@ const doFetch = async (url, options) => {
 
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
+  const {update} = useContext(MainContext);
   const loadMedia = async (start = 10, limit = 20) => {
     try {
       const res = await fetch(`${baseUrl}media?start=${start}&limit=${limit}`);
@@ -42,10 +44,21 @@ const useMedia = () => {
   };
 
   useEffect(() => {
-    loadMedia(10, 20);
-  }, []);
+    loadMedia(0, 5);
+  }, [update]);
 
-  return {mediaArray};
+  const postMedia = async (formData, token) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    };
+    return await doFetch(baseUrl + 'media', options);
+  };
+  return {mediaArray, postMedia};
 };
 
 const useLogin = () => {
