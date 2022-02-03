@@ -79,6 +79,8 @@ const Upload = ({navigation}) => {
     }
   };
 
+  console.log('loading', loading);
+
   return (
     <>
       <ScrollView>
@@ -98,11 +100,11 @@ const Upload = ({navigation}) => {
                 value={value}
                 autoCapitalize="none"
                 placeholder="Title"
+                errorMessage={errors.title && 'This is required'}
               ></Input>
             )}
             name="title"
           ></Controller>
-          {errors.username && <Text>This is required.</Text>}
 
           <Controller
             control={control}
@@ -114,17 +116,18 @@ const Upload = ({navigation}) => {
                 value={value}
                 autoCapitalize="none"
                 placeholder="Description"
+                errorMessage={errors.description && 'This is required'}
               ></Input>
             )}
             name="description"
           ></Controller>
-          {errors.username && <Text>This is required.</Text>}
           <Button
             title="Choose image"
             onPress={pickImage}
             style={styles.button}
           ></Button>
           <Button
+            disabled={!imageSelected}
             loading={loading}
             style={styles.button}
             title="Upload"

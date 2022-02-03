@@ -40,9 +40,11 @@ const useMedia = () => {
         })
       );
       setMediaArray(media);
-      setLoading(false);
+      // media && setLoading(false);
     } catch (error) {
       console.error();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,8 +62,9 @@ const useMedia = () => {
       },
       body: formData,
     };
-    setLoading(false);
-    return await doFetch(baseUrl + 'media', options);
+    const result = await doFetch(baseUrl + 'media', options);
+    result && setLoading(false);
+    return result;
   };
   return {mediaArray, postMedia, loading};
 };
