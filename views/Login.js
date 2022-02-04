@@ -14,6 +14,7 @@ import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import {Card, ButtonGroup} from 'react-native-elements';
+import Logo from '../assets/logo.svg';
 
 const Login = ({navigation}) => {
   // props is needed for navigation
@@ -51,6 +52,9 @@ const Login = ({navigation}) => {
         behavior={Platform.OS === 'ios' ? 'padding' : ''}
         style={styles.container}
       >
+        <View>
+          <Logo style={styles.logo} />
+        </View>
         <View style={styles.form}>
           <Card>
             <ButtonGroup
@@ -86,6 +90,13 @@ const styles = StyleSheet.create({
   },
   form: {
     flex: 8,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    padding: 10,
+    marginTop: 20,
+    alignSelf: 'center',
   },
 });
 

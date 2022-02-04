@@ -1,6 +1,6 @@
 import {useState, useEffect, useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
-import {baseUrl} from '../utils/variables';
+import {appID, baseUrl} from '../utils/variables';
 
 const doFetch = async (url, options) => {
   try {
@@ -27,11 +27,11 @@ const useMedia = () => {
   const loadMedia = async (start = 10, limit = 20) => {
     setLoading(true);
     try {
-      const res = await fetch(`${baseUrl}media?start=${start}&limit=${limit}`);
-      if (!res.ok) {
-        throw Error(res.statusText);
-      }
-      const json = await res.json();
+      // const res = await fetch(`${baseUrl}tags/${appID}`);
+      // if (!res.ok) {
+      //   throw Error(res.statusText);
+      // }
+      const json = await useTag().getFilesByTag(appID);
       const media = await Promise.all(
         json.map(async (item) => {
           const response = await fetch(baseUrl + 'media/' + item.file_id);
