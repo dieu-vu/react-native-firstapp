@@ -145,4 +145,32 @@ const useTag = () => {
   };
   return {postTag, getFilesByTag};
 };
-export {useMedia, useLogin, useUser, useTag};
+
+//https://media.mw.metropolia.fi/wbma/docs/#api-Favourite-GetFileFavourites
+
+const useFavorites = () => {
+  const postFavorites = async (fileId, token) => {
+    const options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'x-access-token': token},
+      body: JSON.stringify({file_id: fileId}),
+    };
+    return await doFetch(`${baseUrl}favourites`, options);
+  };
+
+  const getFavoritesByFileId = async (fileId) => {
+    const ret = await doFetch(`${baseUrl}favourites/file/${fileId}`);
+    return ret;
+  };
+
+  const deleteFavorites = async (fileId, token) => {
+    const options = {
+      method: 'DELETE',
+      headers: {'x-access-token': token},
+    };
+    return await doFetch(`${baseUrl}favourites/file/${fileId}`, options);
+  };
+  return {postFavorites, getFavoritesByFileId, deleteFavorites};
+};
+
+export {useMedia, useLogin, useUser, useTag, useFavorites};
