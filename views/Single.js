@@ -62,8 +62,9 @@ const Single = ({navigation, route}) => {
   const createFavorite = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await postFavorites(file.file_id, token);
-      await fetchLike();
+      const res = await postFavorites(file.file_id, token);
+      res && setCurrentUserLiked(true);
+      // await fetchLike(); // can use useEffect for this step
     } catch (e) {
       console.error('create Favorites error', e.error);
     }
@@ -72,9 +73,9 @@ const Single = ({navigation, route}) => {
   const removeFavorite = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await deleteFavorites(file.file_id, token);
-      await fetchLike();
-      setCurrentUserLiked(false);
+      const res = await deleteFavorites(file.file_id, token);
+      // await fetchLike(); // can use useEffect for this step
+      res && setCurrentUserLiked(false);
     } catch (e) {
       console.error('delete Favorites error', e.error);
     }
@@ -83,8 +84,11 @@ const Single = ({navigation, route}) => {
   useEffect(() => {
     fetchOwner();
     fetchAvatar();
-    fetchLike();
   }, []);
+
+  useEffect(() => {
+    fetchLike();
+  }, [currentUserLiked]);
 
   return (
     <ScrollView style={styles.container}>
