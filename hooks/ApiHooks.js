@@ -20,10 +20,10 @@ const doFetch = async (url, options) => {
   }
 };
 
-const useMedia = () => {
+const useMedia = (myFilesOnly) => {
   const [mediaArray, setMediaArray] = useState([]);
   const [loading, setLoading] = useState(false);
-  const {update} = useContext(MainContext);
+  const {user, update} = useContext(MainContext);
   const loadMedia = async (start = 10, limit = 20) => {
     setLoading(true);
     try {
@@ -31,7 +31,10 @@ const useMedia = () => {
       // if (!res.ok) {
       //   throw Error(res.statusText);
       // }
-      const json = await useTag().getFilesByTag(appID);
+      let json = await useTag().getFilesByTag(appID);
+      if (myFilesOnly) {
+        json = json.filter((file) => file.user_id === user.user_id);
+      }
       const media = await Promise.all(
         json.map(async (item) => {
           const response = await fetch(baseUrl + 'media/' + item.file_id);
@@ -66,7 +69,25 @@ const useMedia = () => {
     result && setLoading(false);
     return result;
   };
-  return {mediaArray, postMedia, loading};
+
+  const putMedia = async (data, token, fileId) => {
+    const options = {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json', 'x-access-token': token},
+      body: JSON.stringify(data),
+    };
+    return await doFetch(`${baseUrl}media/${fileId}`, options);
+  };
+
+  const deleteMedia = async (fileId, token) => {
+    const options = {
+      method: 'DELETE',
+      headers: {'x-access-token': token},
+    };
+    return await doFetch(`${baseUrl}media/${fileId}`, options);
+  };
+
+  return {mediaArray, postMedia, putMedia, deleteMedia, loading};
 };
 
 const useLogin = () => {
@@ -146,7 +167,7 @@ const useTag = () => {
   return {postTag, getFilesByTag};
 };
 
-//https://media.mw.metropolia.fi/wbma/docs/#api-Favourite-GetFileFavourites
+// https://media.mw.metropolia.fi/wbma/docs/#api-Favourite-GetFileFavourites
 
 const useFavorites = () => {
   const postFavorites = async (fileId, token) => {

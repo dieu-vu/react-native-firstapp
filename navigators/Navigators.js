@@ -11,6 +11,8 @@ import Map from '../views/Map';
 import Upload from '../views/Upload';
 import {MainContext} from '../contexts/MainContext';
 import ModifyUser from '../views/ModifyUser';
+import MyFiles from '../views/MyFiles';
+import ModifyMedia from '../views/ModifyMedia';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -60,6 +62,11 @@ const StackScreen = () => {
             component={ModifyUser}
           ></Stack.Screen>
           <Stack.Screen name="Map" component={Map}></Stack.Screen>
+          <Stack.Screen name="My Files" component={MyFiles}></Stack.Screen>
+          <Stack.Screen
+            name="Modify Media"
+            component={ModifyMedia}
+          ></Stack.Screen>
         </>
       ) : (
         <>

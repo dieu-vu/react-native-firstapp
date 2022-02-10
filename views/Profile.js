@@ -83,6 +83,13 @@ const Profile = ({navigation}) => {
             navigation.navigate('Modify user');
           }}
         ></Button>
+        <Button
+          title="My Files"
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate('My Files');
+          }}
+        ></Button>
       </Card>
     </ScrollView>
   );
