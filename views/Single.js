@@ -50,9 +50,7 @@ const Single = ({navigation, route}) => {
     try {
       const likesData = await getFavoritesByFileId(file.file_id);
       const likedUsers = likesData.map((favourite) => favourite.user_id);
-      if (likedUsers.includes(user.user_id)) {
-        setCurrentUserLiked(true);
-      }
+      likedUsers.includes(user.user_id) && setCurrentUserLiked(true);
       setLikes(likesData.length);
       console.log('likes count ', likes);
     } catch (e) {
